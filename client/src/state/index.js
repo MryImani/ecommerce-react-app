@@ -10,8 +10,8 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    setItem: (state, action) => {
-      state.items = [...state.items, action.payload];
+    setItems: (state, action) => {
+      state.items = action.payload;
     },
     addToCart: (state, action) => {
       state.cart = [...state.cart, action.payload.item];
@@ -42,7 +42,7 @@ export const cartSlice = createSlice({
 });
 
 export const {
-  setItem,
+  setItems,
   addToCart,
   removeFromCart,
   increaseCount,

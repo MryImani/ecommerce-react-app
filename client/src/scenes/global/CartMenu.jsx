@@ -53,10 +53,8 @@ const CartMenu = () => {
           {/* HEADER */}
           <FlexBox mb="15px">
             <Typography variant="h3">SHOPPING BAG ({cart.length})</Typography>
-            <IconButton
-              onClick={() => dispatch(setIsCartOpen({}))}
-            >
-               <CloseIcon/> 
+            <IconButton onClick={() => dispatch(setIsCartOpen({}))}>
+              <CloseIcon />
             </IconButton>
           </FlexBox>
           {/* CART LIST */}
@@ -109,11 +107,11 @@ const CartMenu = () => {
                           <AddIcon />
                         </IconButton>
                       </Box>
+                      {/* PRICE */}
+                      <Typography fontWeight="bold">
+                        ${item.attributes.price}
+                      </Typography>
                     </FlexBox>
-                    {/* PRICE */}
-                    <Typography fontWeight="bold">
-                      ${item.attributes.price}
-                    </Typography>
                   </Box>
                 </FlexBox>
                 <Divider />
