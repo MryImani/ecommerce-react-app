@@ -33,7 +33,7 @@ const Navbar = () => {
           sx={{ "&:hover": { cursor: "pointer" } }}
           color={shades.secondary[500]}
         >
-          Mry Shop
+          ECOMMER
         </Box>
         <Box
           display="flex"
