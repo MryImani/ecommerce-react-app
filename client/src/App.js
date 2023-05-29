@@ -29,7 +29,7 @@ function App() {
           <Route path="checkout" element={<Checkout />} />
           <Route path="checkout/success" element={<Confirmation />} />
         </Routes>
-        <CartMenu/>
+        <CartMenu />
         <Footer />
       </BrowserRouter>
     </div>

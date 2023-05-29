@@ -39,7 +39,9 @@ const Item = ({ item, width }) => {
           width="300px"
           height="400px"
           src={`http://localhost:1337${url}`}
-          onClick={() => navigate(`/item/${item.id}`)}
+          onClick={() =>
+            navigate(`/item/${item.id}`)
+          }
           style={{ cursor: "pointer" }}
         />
         <Box
@@ -67,7 +69,7 @@ const Item = ({ item, width }) => {
             </Box>
             <Button
               onClick={() => {
-                dispatch(addToCart({ item: { ...item, count } }));
+                dispatch(addToCart({ item: { ...item, count  } }));
               }}
               sx={{ backgroundColor: shades.primary[300], color: "white" }}
             >

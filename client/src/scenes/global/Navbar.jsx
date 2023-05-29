@@ -8,6 +8,9 @@ const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart); 
+  const cartLength = cart.reduce((total, item) => {
+    return total + item.count;
+  }, 0);
   return (
     <Box
       display="flex"
@@ -48,9 +51,9 @@ const Navbar = () => {
             <PersonOutline />
           </IconButton>
           <Badge
-            badgeContent={cart.length}
+            badgeContent={cartLength}
             color="secondary"
-            invisible={cart.length === 0}
+            invisible={cartLength === 0}
             sx={{
               "& .MuiBadge-badge": {
                 right: 5,

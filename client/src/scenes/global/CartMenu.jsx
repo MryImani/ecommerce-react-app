@@ -27,7 +27,10 @@ const CartMenu = () => {
   const totalPrice = cart.reduce((total, item) => {
     return total + item.count * item.attributes.price;
   }, 0);
-
+  
+  const cartLength = cart.reduce((total,item) => {
+    return total + item.count;
+  }, 0);
   return (
     <Box
       display={isCartOpen ? "block" : "none"}
@@ -52,7 +55,7 @@ const CartMenu = () => {
         <Box padding="30px" overflow="auto" height="100%">
           {/* HEADER */}
           <FlexBox mb="15px">
-            <Typography variant="h3">SHOPPING BAG ({cart.length})</Typography>
+            <Typography variant="h3">SHOPPING BAG ({cartLength})</Typography>
             <IconButton onClick={() => dispatch(setIsCartOpen({}))}>
               <CloseIcon />
             </IconButton>
@@ -109,7 +112,7 @@ const CartMenu = () => {
                       </Box>
                       {/* PRICE */}
                       <Typography fontWeight="bold">
-                        ${item.attributes.price}
+                        ${item.attributes.price * item.count}
                       </Typography>
                     </FlexBox>
                   </Box>
@@ -122,7 +125,9 @@ const CartMenu = () => {
           <Box m="20px 0">
             <FlexBox m="20px 0">
               <Typography fontWeight="bold">SUBTOTAL</Typography>
-              <Typography fontWeight="bold">${totalPrice}</Typography>
+              <Typography fontWeight="bold">
+                ${Math.floor(totalPrice)}
+              </Typography>
             </FlexBox>
             <Button
               sx={{

@@ -18,6 +18,7 @@ const ItemDetails = () => {
   const [count, setCount] = useState(1);
   const [item, setItem] = useState(null);
   const [items, setItems] = useState([]);
+  const [category , setCategory] = useState('');
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -31,7 +32,9 @@ const ItemDetails = () => {
       }
     );
     const itemJson = await item.json();
+    const itemCategory = await itemJson.data.attributes.category;
     setItem(itemJson.data);
+    setCategory(itemCategory);
   }
 
   async function getItems() {
@@ -49,7 +52,7 @@ const ItemDetails = () => {
     getItem();
     getItems();
   }, [itemId]); // eslint-disable-line react-hooks/exhaustive-deps
-
+  
   return (
     <Box width="80%" m="80px auto">
       <Box display="flex" flexWrap="wrap" columnGap="40px">
@@ -144,9 +147,12 @@ const ItemDetails = () => {
           columnGap="1.33%"
           justifyContent="space-between"
         >
-          {items.slice(0, 4).map((item, i) => (
-            <Item key={`${item.name}-${i}`} item={item} />
-          ))}
+          {items
+            .filter((item) => item.attributes.category === category)
+            .slice(0, 4)
+            .map((item, i) => (
+              <Item key={`${item.name}-${i}`} item={item} />
+            ))}
         </Box>
       </Box>
     </Box>
