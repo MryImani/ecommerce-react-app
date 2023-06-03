@@ -3,8 +3,40 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setAddressForm } from "../../state";
 
-export default function AddressForm() {
+export default function AddressForm(props) {
+  const dispatch = useDispatch();
+  const [userInfo, setUserInfo] = useState({
+    firstName: "",
+    lastName: "",
+    address1: "",
+    address2: "",
+    city: "",
+    state: "",
+    zip: "",
+    country: "",
+    saveAddress: "yes",
+  });
+  function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+  const handleChange = (event) => {
+    event.preventDefault();
+    const { name, value } = event.target;
+    setUserInfo((prevValue) => {
+      return {
+        ...prevValue,
+        [name]: capitalize(value),
+      };
+    });
+  };
+  useEffect(() => {
+    props.setParentData({ userInfo: userInfo });
+  }, [props, userInfo]);
+
   return (
     <div>
       <Typography variant="h6" gutterBottom>
@@ -20,6 +52,8 @@ export default function AddressForm() {
             fullWidth
             autoComplete="given-name"
             variant="standard"
+            value={userInfo.firstName}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -31,6 +65,8 @@ export default function AddressForm() {
             fullWidth
             autoComplete="family-name"
             variant="standard"
+            value={userInfo.lastName}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12}>
@@ -42,6 +78,8 @@ export default function AddressForm() {
             fullWidth
             autoComplete="shipping address-line1"
             variant="standard"
+            value={userInfo.address1}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12}>
@@ -52,6 +90,8 @@ export default function AddressForm() {
             fullWidth
             autoComplete="shipping address-line2"
             variant="standard"
+            value={userInfo.address2}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -63,6 +103,8 @@ export default function AddressForm() {
             fullWidth
             autoComplete="shipping address-level2"
             variant="standard"
+            value={userInfo.city}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -72,6 +114,8 @@ export default function AddressForm() {
             label="State/Province/Region"
             fullWidth
             variant="standard"
+            value={userInfo.state}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -83,6 +127,8 @@ export default function AddressForm() {
             fullWidth
             autoComplete="shipping postal-code"
             variant="standard"
+            value={userInfo.zip}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -94,12 +140,18 @@ export default function AddressForm() {
             fullWidth
             autoComplete="shipping country"
             variant="standard"
+            value={userInfo.country}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12}>
           <FormControlLabel
             control={
-              <Checkbox color="primary" name="saveAddress" value="yes" />
+              <Checkbox
+                color="primary"
+                name="saveAddress"
+                value={userInfo.saveAddress}
+              />
             }
             label="Use this address for payment details"
           />

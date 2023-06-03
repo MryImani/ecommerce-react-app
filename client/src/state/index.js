@@ -4,6 +4,8 @@ const initialState = {
     isCartOpen : false,
     cart:[],
     items:[],
+    addressForm:[],
+    paymentForm:[]
 }
 
 export const cartSlice = createSlice({
@@ -14,17 +16,17 @@ export const cartSlice = createSlice({
       state.items = action.payload;
     },
     addToCart: (state, action) => {
-       const itemInCart = state.cart.find(
-         (item) => item.id === action.payload.item.id
-       );
-       if (itemInCart) {
-            itemInCart.count++;
-       } else {
-         state.cart.push({
-           ...action.payload.item,
-           count: action.payload.item.count,
-         });
-       }
+      const itemInCart = state.cart.find(
+        (item) => item.id === action.payload.item.id
+      );
+      if (itemInCart) {
+        itemInCart.count++;
+      } else {
+        state.cart.push({
+          ...action.payload.item,
+          count: action.payload.item.count,
+        });
+      }
     },
     removeFromCart: (state, action) => {
       state.cart = state.cart.filter((item) => item.id !== action.payload.id);
@@ -48,9 +50,15 @@ export const cartSlice = createSlice({
     setIsCartOpen: (state) => {
       state.isCartOpen = !state.isCartOpen;
     },
-    clearCart : (state) => {
+    clearCart: (state) => {
       state.cart = [];
-    }
+    },
+    setAddressForm: (state, action) => {
+      state.addressForm = [...state.addressForm, action.payload];
+    },
+    setPaymentForm: (state, action) => {
+      state.paymentForm = action.payload
+    },
   },
 });
 
@@ -62,6 +70,8 @@ export const {
   decreaseCount,
   setIsCartOpen,
   clearCart,
+  setAddressForm,
+  setPaymentForm,
 } = cartSlice.actions;
 
 export default cartSlice.reducer

@@ -1,4 +1,4 @@
-import {useState} from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
@@ -7,31 +7,46 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import {useNavigate} from 'react-router-dom'
-import Confirmation from './Confirmation'
+import Confirmation from "./Confirmation";
 import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import Review from "./Review";
-
-
-
-const steps = ["Shipping address", "Payment details", "Review your order"];
-
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <AddressForm />;
-    case 1:
-      return <PaymentForm />;
-    case 2:
-      return <Review />;
-    default:
-      throw new Error("Unknown step");
-  }
-}
-
+import { useSelector } from "react-redux";
 
 export default function Checkout() {
+  const [userInfo, setUserInfo] = useState({
+    firstName: "",
+    lastName: "",
+    address1: "",
+    address2: "",
+    city: "",
+    state: "",
+    zip: "",
+    country: "",
+    saveAddress: "yes",
+  });
+  const [paymentInfo, setPaymentInfo] = useState({
+    cardName: "",
+    cardNumber: "",
+    expDate: "",
+    cvv: "",
+  });
+
+  const steps = ["Shipping address", "Payment details", "Review your order"];
+
+  function getStepContent(step) {
+    switch (step) {
+      case 0:
+        return <AddressForm setParentData={setUserInfo} />;
+      case 1:
+        return <PaymentForm setParentData={setPaymentInfo} />;
+      case 2:
+        return <Review userInfo={userInfo} paymentInfo={paymentInfo}/>;
+      default:
+        throw new Error("Unknown step");
+    }
+  }
+
   const [activeStep, setActiveStep] = useState(0);
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -39,9 +54,7 @@ export default function Checkout() {
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
-
   };
-
   return (
     <Container component="main" maxWidth="sm" sx={{ mb: 4, mt: 9 }}>
       <Paper
@@ -59,7 +72,7 @@ export default function Checkout() {
           ))}
         </Stepper>
         {activeStep === steps.length ? (
-          <Confirmation/>
+          <Confirmation />
         ) : (
           <Box>
             {getStepContent(activeStep)}

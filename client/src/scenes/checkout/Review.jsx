@@ -7,16 +7,13 @@ import Grid from "@mui/material/Grid";
 import {useSelector} from 'react-redux';
 
 
+export default function Review(props) {
+let address = Object.values(props.userInfo)[0];
+address = Object.values(address);
 
-const addresses = ["1 MUI Drive", "Reactville", "Anytown", "99999", "USA"];
-const payments = [
-  { name: "Card type", detail: "Visa" },
-  { name: "Card holder", detail: "Mr John Smith" },
-  { name: "Card number", detail: "xxxx-xxxx-xxxx-1234" },
-  { name: "Expiry date", detail: "04/2024" },
-];
-
-export default function Review() {
+let payments = Object.values(props.paymentInfo)[0];
+//payments = Object.values(payments);
+const arr = Array.from(Object.keys(payments), (k) => [`${k}`, payments[k]]);
 const products = useSelector((state) => state.cart.cart);
 const total = products.reduce((total, product) => {
   return total + product.attributes.price * product.count;
@@ -51,25 +48,24 @@ const total = products.reduce((total, product) => {
         </ListItem>
       </List>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={8}>
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             Shipping
           </Typography>
-          <Typography gutterBottom>{}</Typography>
-          <Typography gutterBottom>{addresses.join(", ")}</Typography>
+          <Typography gutterBottom>{address.join(",")}</Typography>
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             Payment details
           </Typography>
           <Grid container>
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
+            {arr.map((payment) => (
+              <React.Fragment key={payment[0]}>
                 <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
+                  <Typography gutterBottom>{payment[0]}</Typography>
                 </Grid>
                 <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
+                  <Typography gutterBottom>{payment[1]}</Typography>
                 </Grid>
               </React.Fragment>
             ))}
