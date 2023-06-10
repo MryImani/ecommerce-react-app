@@ -1,10 +1,4 @@
-import {
-  Box,
-  Button,
-  Divider,
-  IconButton,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Divider, IconButton, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import CloseIcon from "@mui/icons-material/Close";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -33,8 +27,8 @@ const CartMenu = () => {
   const totalPrice = cart.reduce((total, item) => {
     return total + item.count * item.attributes.price;
   }, 0);
-  
-  const cartLength = cart.reduce((total,item) => {
+
+  const cartLength = cart.reduce((total, item) => {
     return total + item.count;
   }, 0);
   return (
@@ -143,11 +137,16 @@ const CartMenu = () => {
                 minWidth: "100%",
                 padding: "20px 40px",
                 margin: "20px 0",
+                "&:disabled": {
+                  cursor: "not-allowed",
+                  pointerEvents: "auto",
+                },
               }}
               onClick={() => {
                 navigate("/checkout");
                 dispatch(setIsCartOpen({}));
               }}
+              disabled={cartLength === 0 ? true : false}
             >
               CHECKOUT
             </Button>

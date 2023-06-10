@@ -31,7 +31,7 @@ const total = products.reduce((total, product) => {
             sx={{ py: 1, px: 0 }}
           >
             <ListItemText
-              primary={`${product.attributes.name}(${product.count})`}
+              primary={`${product.attributes.name} ( ${product.count} ) `}
               secondary={product.attributes.shortDescription}
             />
             <Typography variant="body2">
